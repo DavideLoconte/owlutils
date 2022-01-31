@@ -1,0 +1,451 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> root_stmt
+Rule 1     lbracket -> {
+Rule 2     rbracket -> }
+Rule 3     stmt -> key value lbracket stmts
+Rule 4     root_stmt -> key value lbracket stmts rbracket
+Rule 5     empty -> <empty>
+Rule 6     key -> KEYWORD
+Rule 7     key -> string
+Rule 8     value -> KEYWORD
+Rule 9     value -> string
+Rule 10    value -> empty
+Rule 11    string -> STRING CONCAT string
+Rule 12    string -> STRING string
+Rule 13    string -> STRING
+Rule 14    stmt -> key value lbracket stmts rbracket
+Rule 15    stmt -> key value lbracket stmts rbracket ;
+Rule 16    stmt -> key value lbracket empty rbracket
+Rule 17    stmt -> key value lbracket empty rbracket ;
+Rule 18    stmt -> key value ;
+Rule 19    stmts -> stmt stmts
+Rule 20    stmts -> stmt
+
+Terminals, with rules where they appear
+
+;                    : 15 17 18
+CONCAT               : 11
+KEYWORD              : 6 8
+STRING               : 11 12 13
+error                : 
+{                    : 1
+}                    : 2
+
+Nonterminals, with rules where they appear
+
+empty                : 10 16 17
+key                  : 3 4 14 15 16 17 18
+lbracket             : 3 4 14 15 16 17
+rbracket             : 4 14 15 16 17
+root_stmt            : 0
+stmt                 : 19 20
+stmts                : 3 4 14 15 19
+string               : 7 9 11 12
+value                : 3 4 14 15 16 17 18
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . root_stmt
+    (4) root_stmt -> . key value lbracket stmts rbracket
+    (6) key -> . KEYWORD
+    (7) key -> . string
+    (11) string -> . STRING CONCAT string
+    (12) string -> . STRING string
+    (13) string -> . STRING
+
+    KEYWORD         shift and go to state 3
+    STRING          shift and go to state 5
+
+    root_stmt                      shift and go to state 1
+    key                            shift and go to state 2
+    string                         shift and go to state 4
+
+state 1
+
+    (0) S' -> root_stmt .
+
+
+
+state 2
+
+    (4) root_stmt -> key . value lbracket stmts rbracket
+    (8) value -> . KEYWORD
+    (9) value -> . string
+    (10) value -> . empty
+    (11) string -> . STRING CONCAT string
+    (12) string -> . STRING string
+    (13) string -> . STRING
+    (5) empty -> .
+
+    KEYWORD         shift and go to state 7
+    STRING          shift and go to state 5
+    {               reduce using rule 5 (empty -> .)
+
+    value                          shift and go to state 6
+    string                         shift and go to state 8
+    empty                          shift and go to state 9
+
+state 3
+
+    (6) key -> KEYWORD .
+
+    KEYWORD         reduce using rule 6 (key -> KEYWORD .)
+    STRING          reduce using rule 6 (key -> KEYWORD .)
+    {               reduce using rule 6 (key -> KEYWORD .)
+    ;               reduce using rule 6 (key -> KEYWORD .)
+
+
+state 4
+
+    (7) key -> string .
+
+    KEYWORD         reduce using rule 7 (key -> string .)
+    STRING          reduce using rule 7 (key -> string .)
+    {               reduce using rule 7 (key -> string .)
+    ;               reduce using rule 7 (key -> string .)
+
+
+state 5
+
+    (11) string -> STRING . CONCAT string
+    (12) string -> STRING . string
+    (13) string -> STRING .
+    (11) string -> . STRING CONCAT string
+    (12) string -> . STRING string
+    (13) string -> . STRING
+
+  ! shift/reduce conflict for STRING resolved as shift
+    CONCAT          shift and go to state 10
+    KEYWORD         reduce using rule 13 (string -> STRING .)
+    {               reduce using rule 13 (string -> STRING .)
+    ;               reduce using rule 13 (string -> STRING .)
+    STRING          shift and go to state 5
+
+  ! STRING          [ reduce using rule 13 (string -> STRING .) ]
+
+    string                         shift and go to state 11
+
+state 6
+
+    (4) root_stmt -> key value . lbracket stmts rbracket
+    (1) lbracket -> . {
+
+    {               shift and go to state 13
+
+    lbracket                       shift and go to state 12
+
+state 7
+
+    (8) value -> KEYWORD .
+
+    {               reduce using rule 8 (value -> KEYWORD .)
+    ;               reduce using rule 8 (value -> KEYWORD .)
+
+
+state 8
+
+    (9) value -> string .
+
+    {               reduce using rule 9 (value -> string .)
+    ;               reduce using rule 9 (value -> string .)
+
+
+state 9
+
+    (10) value -> empty .
+
+    {               reduce using rule 10 (value -> empty .)
+    ;               reduce using rule 10 (value -> empty .)
+
+
+state 10
+
+    (11) string -> STRING CONCAT . string
+    (11) string -> . STRING CONCAT string
+    (12) string -> . STRING string
+    (13) string -> . STRING
+
+    STRING          shift and go to state 5
+
+    string                         shift and go to state 14
+
+state 11
+
+    (12) string -> STRING string .
+
+    KEYWORD         reduce using rule 12 (string -> STRING string .)
+    STRING          reduce using rule 12 (string -> STRING string .)
+    {               reduce using rule 12 (string -> STRING string .)
+    ;               reduce using rule 12 (string -> STRING string .)
+
+
+state 12
+
+    (4) root_stmt -> key value lbracket . stmts rbracket
+    (19) stmts -> . stmt stmts
+    (20) stmts -> . stmt
+    (3) stmt -> . key value lbracket stmts
+    (14) stmt -> . key value lbracket stmts rbracket
+    (15) stmt -> . key value lbracket stmts rbracket ;
+    (16) stmt -> . key value lbracket empty rbracket
+    (17) stmt -> . key value lbracket empty rbracket ;
+    (18) stmt -> . key value ;
+    (6) key -> . KEYWORD
+    (7) key -> . string
+    (11) string -> . STRING CONCAT string
+    (12) string -> . STRING string
+    (13) string -> . STRING
+
+    KEYWORD         shift and go to state 3
+    STRING          shift and go to state 5
+
+    key                            shift and go to state 15
+    stmts                          shift and go to state 16
+    stmt                           shift and go to state 17
+    string                         shift and go to state 4
+
+state 13
+
+    (1) lbracket -> { .
+
+    KEYWORD         reduce using rule 1 (lbracket -> { .)
+    STRING          reduce using rule 1 (lbracket -> { .)
+    }               reduce using rule 1 (lbracket -> { .)
+
+
+state 14
+
+    (11) string -> STRING CONCAT string .
+
+    KEYWORD         reduce using rule 11 (string -> STRING CONCAT string .)
+    STRING          reduce using rule 11 (string -> STRING CONCAT string .)
+    {               reduce using rule 11 (string -> STRING CONCAT string .)
+    ;               reduce using rule 11 (string -> STRING CONCAT string .)
+
+
+state 15
+
+    (3) stmt -> key . value lbracket stmts
+    (14) stmt -> key . value lbracket stmts rbracket
+    (15) stmt -> key . value lbracket stmts rbracket ;
+    (16) stmt -> key . value lbracket empty rbracket
+    (17) stmt -> key . value lbracket empty rbracket ;
+    (18) stmt -> key . value ;
+    (8) value -> . KEYWORD
+    (9) value -> . string
+    (10) value -> . empty
+    (11) string -> . STRING CONCAT string
+    (12) string -> . STRING string
+    (13) string -> . STRING
+    (5) empty -> .
+
+    KEYWORD         shift and go to state 7
+    STRING          shift and go to state 5
+    ;               reduce using rule 5 (empty -> .)
+    {               reduce using rule 5 (empty -> .)
+
+    value                          shift and go to state 18
+    empty                          shift and go to state 9
+    string                         shift and go to state 8
+
+state 16
+
+    (4) root_stmt -> key value lbracket stmts . rbracket
+    (2) rbracket -> . }
+
+    }               shift and go to state 20
+
+    rbracket                       shift and go to state 19
+
+state 17
+
+    (19) stmts -> stmt . stmts
+    (20) stmts -> stmt .
+    (19) stmts -> . stmt stmts
+    (20) stmts -> . stmt
+    (3) stmt -> . key value lbracket stmts
+    (14) stmt -> . key value lbracket stmts rbracket
+    (15) stmt -> . key value lbracket stmts rbracket ;
+    (16) stmt -> . key value lbracket empty rbracket
+    (17) stmt -> . key value lbracket empty rbracket ;
+    (18) stmt -> . key value ;
+    (6) key -> . KEYWORD
+    (7) key -> . string
+    (11) string -> . STRING CONCAT string
+    (12) string -> . STRING string
+    (13) string -> . STRING
+
+  ! shift/reduce conflict for KEYWORD resolved as shift
+  ! shift/reduce conflict for STRING resolved as shift
+    }               reduce using rule 20 (stmts -> stmt .)
+    KEYWORD         shift and go to state 3
+    STRING          shift and go to state 5
+
+  ! KEYWORD         [ reduce using rule 20 (stmts -> stmt .) ]
+  ! STRING          [ reduce using rule 20 (stmts -> stmt .) ]
+
+    stmt                           shift and go to state 17
+    stmts                          shift and go to state 21
+    key                            shift and go to state 15
+    string                         shift and go to state 4
+
+state 18
+
+    (3) stmt -> key value . lbracket stmts
+    (14) stmt -> key value . lbracket stmts rbracket
+    (15) stmt -> key value . lbracket stmts rbracket ;
+    (16) stmt -> key value . lbracket empty rbracket
+    (17) stmt -> key value . lbracket empty rbracket ;
+    (18) stmt -> key value . ;
+    (1) lbracket -> . {
+
+    ;               shift and go to state 23
+    {               shift and go to state 13
+
+    lbracket                       shift and go to state 22
+
+state 19
+
+    (4) root_stmt -> key value lbracket stmts rbracket .
+
+    $end            reduce using rule 4 (root_stmt -> key value lbracket stmts rbracket .)
+
+
+state 20
+
+    (2) rbracket -> } .
+
+    $end            reduce using rule 2 (rbracket -> } .)
+    ;               reduce using rule 2 (rbracket -> } .)
+    KEYWORD         reduce using rule 2 (rbracket -> } .)
+    STRING          reduce using rule 2 (rbracket -> } .)
+    }               reduce using rule 2 (rbracket -> } .)
+
+
+state 21
+
+    (19) stmts -> stmt stmts .
+
+    }               reduce using rule 19 (stmts -> stmt stmts .)
+    KEYWORD         reduce using rule 19 (stmts -> stmt stmts .)
+    STRING          reduce using rule 19 (stmts -> stmt stmts .)
+
+
+state 22
+
+    (3) stmt -> key value lbracket . stmts
+    (14) stmt -> key value lbracket . stmts rbracket
+    (15) stmt -> key value lbracket . stmts rbracket ;
+    (16) stmt -> key value lbracket . empty rbracket
+    (17) stmt -> key value lbracket . empty rbracket ;
+    (19) stmts -> . stmt stmts
+    (20) stmts -> . stmt
+    (5) empty -> .
+    (3) stmt -> . key value lbracket stmts
+    (14) stmt -> . key value lbracket stmts rbracket
+    (15) stmt -> . key value lbracket stmts rbracket ;
+    (16) stmt -> . key value lbracket empty rbracket
+    (17) stmt -> . key value lbracket empty rbracket ;
+    (18) stmt -> . key value ;
+    (6) key -> . KEYWORD
+    (7) key -> . string
+    (11) string -> . STRING CONCAT string
+    (12) string -> . STRING string
+    (13) string -> . STRING
+
+    }               reduce using rule 5 (empty -> .)
+    KEYWORD         shift and go to state 3
+    STRING          shift and go to state 5
+
+    key                            shift and go to state 15
+    stmts                          shift and go to state 24
+    empty                          shift and go to state 25
+    stmt                           shift and go to state 17
+    string                         shift and go to state 4
+
+state 23
+
+    (18) stmt -> key value ; .
+
+    KEYWORD         reduce using rule 18 (stmt -> key value ; .)
+    STRING          reduce using rule 18 (stmt -> key value ; .)
+    }               reduce using rule 18 (stmt -> key value ; .)
+
+
+state 24
+
+    (3) stmt -> key value lbracket stmts .
+    (14) stmt -> key value lbracket stmts . rbracket
+    (15) stmt -> key value lbracket stmts . rbracket ;
+    (2) rbracket -> . }
+
+  ! shift/reduce conflict for } resolved as shift
+    KEYWORD         reduce using rule 3 (stmt -> key value lbracket stmts .)
+    STRING          reduce using rule 3 (stmt -> key value lbracket stmts .)
+    }               shift and go to state 20
+
+  ! }               [ reduce using rule 3 (stmt -> key value lbracket stmts .) ]
+
+    rbracket                       shift and go to state 26
+
+state 25
+
+    (16) stmt -> key value lbracket empty . rbracket
+    (17) stmt -> key value lbracket empty . rbracket ;
+    (2) rbracket -> . }
+
+    }               shift and go to state 20
+
+    rbracket                       shift and go to state 27
+
+state 26
+
+    (14) stmt -> key value lbracket stmts rbracket .
+    (15) stmt -> key value lbracket stmts rbracket . ;
+
+    KEYWORD         reduce using rule 14 (stmt -> key value lbracket stmts rbracket .)
+    STRING          reduce using rule 14 (stmt -> key value lbracket stmts rbracket .)
+    }               reduce using rule 14 (stmt -> key value lbracket stmts rbracket .)
+    ;               shift and go to state 28
+
+
+state 27
+
+    (16) stmt -> key value lbracket empty rbracket .
+    (17) stmt -> key value lbracket empty rbracket . ;
+
+    KEYWORD         reduce using rule 16 (stmt -> key value lbracket empty rbracket .)
+    STRING          reduce using rule 16 (stmt -> key value lbracket empty rbracket .)
+    }               reduce using rule 16 (stmt -> key value lbracket empty rbracket .)
+    ;               shift and go to state 29
+
+
+state 28
+
+    (15) stmt -> key value lbracket stmts rbracket ; .
+
+    KEYWORD         reduce using rule 15 (stmt -> key value lbracket stmts rbracket ; .)
+    STRING          reduce using rule 15 (stmt -> key value lbracket stmts rbracket ; .)
+    }               reduce using rule 15 (stmt -> key value lbracket stmts rbracket ; .)
+
+
+state 29
+
+    (17) stmt -> key value lbracket empty rbracket ; .
+
+    KEYWORD         reduce using rule 17 (stmt -> key value lbracket empty rbracket ; .)
+    STRING          reduce using rule 17 (stmt -> key value lbracket empty rbracket ; .)
+    }               reduce using rule 17 (stmt -> key value lbracket empty rbracket ; .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for STRING in state 5 resolved as shift
+WARNING: shift/reduce conflict for KEYWORD in state 17 resolved as shift
+WARNING: shift/reduce conflict for STRING in state 17 resolved as shift
+WARNING: shift/reduce conflict for } in state 24 resolved as shift
